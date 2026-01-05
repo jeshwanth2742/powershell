@@ -1,0 +1,138 @@
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Fake PowerShell Errors</title>
+<style>
+  body {
+    margin: 0;
+    background: #0C0C0C;          /* PowerShell background */
+    color: #D4D4D4;               /* Light gray text */
+    font-family: Consolas, "Courier New", monospace;
+  }
+  .terminal {
+    padding: 20px;
+    white-space: pre-wrap;
+    font-size: 14px;
+  }
+  .prompt { color: #D4D4D4; }
+  .code { color: #D4D4D4; }
+  .path { color: #9CDCFE; }       /* File path blue */
+  .error { color: #F14C4C; }      /* PowerShell red */
+  .warning { color: #CCA700; }    /* PowerShell yellow */
+  .cursor {
+    animation: blink 1s step-start infinite;
+  }
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="terminal">
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+PS C:\Users\HP\JavaRMI> javac DateServiceImpl.java
+
+<span class="path">C:\Users\HP\JavaRMI\DateServiceImpl.java:1:</span> <span class="error">error: package java.rmi.server does not exist</span>
+<span class="code">import java.rmi.server.UnicastRemoteObject;</span>
+<span class="error">       ^</span>
+
+<span class="path">C:\Users\HP\JavaRMI\DateServiceImpl.java:6:</span> <span class="error">error: cannot find symbol</span>
+<span class="code">public class DateServiceImpl extends UnicastRemoteObject implements DateService {</span>
+<span class="error">                                                        ^</span>
+<span class="error">  symbol:   class DateService</span>
+<span class="error">  location: class DateServiceImpl</span>
+
+<span class="path">C:\Users\HP\JavaRMI\DateServiceImpl.java:12:</span> <span class="error">error: method does not override or implement a method from a supertype</span>
+<span class="code">    @Override</span>
+<span class="error">    ^</span>
+
+<span class="warning">Note: DateServiceImpl.java uses or overrides a deprecated API.</span>
+
+--------------------------------------------------
+
+<span class="code">import java.net.*;
+import java.io.*;
+
+public class DNS{
+
+    public static void main(String[] args) throws IOException {
+
+        BufferedReader br = new BufferedReader(
+                new InputStreamReader(System.in));
+
+        int choice;
+
+        do {
+            System.out.println("\nMenu:");
+            System.out.println("1. DNS");
+            System.out.println("2. Reverse DNS");
+            System.out.println("3. Exit");
+            System.out.print("Enter your choice: ");
+
+            choice = Integer.parseInt(br.readLine());
+
+            switch (choice) {
+
+                case 1:
+                    System.out.print("\nEnter Host Name: ");
+                    InetAddress addr1 =
+                            InetAddress.getByName(br.readLine());
+                    System.out.println("Host Name: " + addr1.getHostName());
+                    System.out.println("IP Address: " + addr1.getHostAddress());
+                    break;
+
+                case 2:
+                    System.out.print("\nEnter IP Address: ");
+                    String ip = br.readLine();
+                    InetAddress addr2 = InetAddress.getByName(ip);
+                    System.out.println("IP Address: " + ip);
+                    System.out.println("Host Name: " + addr2.getHostName());
+                    break;
+
+                case 3:
+                    System.out.println("Exiting...");
+                    break;
+
+                default:
+                    System.out.println("Invalid choice!");
+            }
+
+        } while (choice != 3);
+    }
+}
+
+
+
+
+</span>
+
+--------------------------------------------------
+
+<span class="prompt">PS C:\Users\HP\JavaRMI> </span><span class="cursor">_</span>
+</div>
+
+</body>
+</html>
+

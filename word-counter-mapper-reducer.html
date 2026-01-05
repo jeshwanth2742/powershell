@@ -1,0 +1,162 @@
+
+
+
+
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Fake PowerShell Errors</title>
+<style>
+  body {
+    margin: 0;
+    background: #0C0C0C;          /* PowerShell background */
+    color: #D4D4D4;               /* Light gray text */
+    font-family: Consolas, "Courier New", monospace;
+  }
+  .terminal {
+    padding: 20px;
+    white-space: pre-wrap;
+    font-size: 14px;
+  }
+  .prompt { color: #D4D4D4; }
+  .code { color: #D4D4D4; }
+  .path { color: #9CDCFE; }       /* File path blue */
+  .error { color: #F14C4C; }      /* PowerShell red */
+  .warning { color: #CCA700; }    /* PowerShell yellow */
+  .cursor {
+    animation: blink 1s step-start infinite;
+  }
+  @keyframes blink {
+    50% { opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+<div class="terminal">
+Windows PowerShell
+Copyright (C) Microsoft Corporation. All rights reserved.
+
+PS C:\Users\HP\JavaRMI> javac DateServiceImpl.java
+
+<span class="path">C:\Users\HP\JavaRMI\DateServiceImpl.java:1:</span> <span class="error">error: package java.rmi.server does not exist</span>
+<span class="code">import java.rmi.server.UnicastRemoteObject;</span>
+<span class="error">       ^</span>
+
+<span class="path">C:\Users\HP\JavaRMI\DateServiceImpl.java:6:</span> <span class="error">error: cannot find symbol</span>
+<span class="code">public class DateServiceImpl extends UnicastRemoteObject implements DateService {</span>
+<span class="error">                                                        ^</span>
+<span class="error">  symbol:   class DateService</span>
+<span class="error">  location: class DateServiceImpl</span>
+
+<span class="path">C:\Users\HP\JavaRMI\DateServiceImpl.java:12:</span> <span class="error">error: method does not override or implement a method from a supertype</span>
+<span class="code">    @Override</span>
+<span class="error">    ^</span>
+
+<span class="warning">Note: DateServiceImpl.java uses or overrides a deprecated API.</span>
+
+--------------------------------------------------
+
+<span class="code">import java.io.IOException;
+
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.LongWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Mapper;
+
+public class WordCountMapper
+        extends Mapper<LongWritable, Text, Text, IntWritable> {
+
+    private final static IntWritable ONE = new IntWritable(1);
+    private Text word = new Text();
+
+    @Override
+    public void map(LongWritable key, Text value, Context context)
+            throws IOException, InterruptedException {
+
+        for (String w : value.toString().split("\\s+")) {
+            word.set(w);
+            context.write(word, ONE);
+        }
+    }
+}
+
+
+
+
+
+import java.io.IOException;
+
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Reducer;
+
+public class WordCountReducer
+        extends Reducer<Text, IntWritable, Text, IntWritable> {
+
+    @Override
+    public void reduce(Text key,
+                       Iterable<IntWritable> values,
+                       Context context)
+            throws IOException, InterruptedException {
+
+        int sum = 0;
+
+        for (IntWritable val : values) {
+            sum += val.get();
+        }
+
+        context.write(key, new IntWritable(sum));
+    }
+}
+
+
+import org.apache.hadoop.conf.Configuration;
+import org.apache.hadoop.fs.Path;
+import org.apache.hadoop.io.IntWritable;
+import org.apache.hadoop.io.Text;
+import org.apache.hadoop.mapreduce.Job;
+import org.apache.hadoop.mapreduce.lib.input.FileInputFormat;
+import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
+
+public class WordCountDriver {
+
+    public static void main(String[] args) throws Exception {
+
+        Job job = Job.getInstance(
+                new Configuration(), "word count");
+
+        job.setJarByClass(WordCountDriver.class);
+
+        job.setMapperClass(WordCountMapper.class);
+        job.setReducerClass(WordCountReducer.class);
+
+        job.setOutputKeyClass(Text.class);
+        job.setOutputValueClass(IntWritable.class);
+
+        FileInputFormat.addInputPath(
+                job, new Path(args[0]));
+
+        FileOutputFormat.setOutputPath(
+                job, new Path(args[1]));
+
+        System.exit(job.waitForCompletion(true) ? 0 : 1);
+    }
+}
+</span>
+
+--------------------------------------------------
+
+<span class="prompt">PS C:\Users\HP\JavaRMI> </span><span class="cursor">_</span>
+</div>
+
+</body>
+</html>
+
+
+
